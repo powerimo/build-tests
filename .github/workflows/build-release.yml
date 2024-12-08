@@ -1,0 +1,30 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - "release/**"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Determine Release Version
+      id: set-version
+      if: startsWith(github.ref, 'refs/heads/release/')
+      run: |
+        RELEASE_VERSION=$(echo "${GITHUB_REF#refs/heads/release/}")
+        echo "RELEASE_VERSION=${RELEASE_VERSION}" >> $GITHUB_ENV
+        echo "Release version detected: ${RELEASE_VERSION}"
+
+    - name: CURL to log server
+      run: |
+        curl --location 'https://powerimo.org/httplogger/basic' \
+          --header 'Content-Type: application/json' \
+          --data '{
+            "aaa": "bbb1"
+          }'
+        
