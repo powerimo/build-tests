@@ -43,10 +43,17 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
-        server-id: ossrh
-        server-username: ${{ secrets.OSSRH_USERNAME }}
-        server-password: ${{ secrets.OSSRH_PASSWORD }}
         overwrite-settings: true
+
+    - name: Populating secrets
+      uses: s4u/maven-settings-action@v3.1.0
+      with:
+        servers: |
+          [{
+              "id": "ossrh",
+              "username": "${{ secrets.OSSRH_USERNAME }}",
+              "password": "${{ secrets.OSSRH_PASSWORD }}"
+          }]
 
     - name: CURL to log server with secrets
       run: |
