@@ -1,5 +1,9 @@
 name: Build
 
+env:
+  OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+  OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
+
 on:
   push:
     branches:
@@ -44,8 +48,11 @@ jobs:
         distribution: 'temurin'
         cache: maven
         overwrite-settings: true
+        server-username: OSSRH_USERNAME
+        server-password: OSSRH_PASSWORD
 
     - name: Populating secrets
+      if: false
       uses: s4u/maven-settings-action@v3.1.0
       with:
         servers: |
@@ -55,7 +62,7 @@ jobs:
               "password": "${{ secrets.OSSRH_PASSWORD }}"
           }]
 
-    - name: CURL to log server with secrets
+    - name: CURL with settings.xml
       run: |
         curl --location 'https://powerimo.org/httplogger/basic' \
         --header 'Content-Type: text/plain' \
