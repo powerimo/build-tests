@@ -25,7 +25,7 @@ jobs:
         curl --location 'https://powerimo.org/httplogger/basic' \
           --header 'Content-Type: application/json' \
           --data '{
-            "aaa": "bbb1"
+            "sample": "data"
           }'
 
     - name: CURL to log server with secrets
